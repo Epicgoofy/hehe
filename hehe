@@ -14,10 +14,12 @@ local tab1 = DrRayLibrary.newTab("combat", "ImageIdHere")
 -- Add elements to the first tab
 tab1.newLabel("long neck")
 
--- Add elements to the first tab
-tab2.newLabel("hitbox")
+tab2.newLabel("Light")
 
-tab2.newToggle("on/off"), "", false, function(togglestate)
+local isEnabled = false
+local brightness = 100
+
+tab2.newToggle("on/off", "", false, function(toggleState)
     isEnabled = toggleState
     if isEnabled then
         print("On")
@@ -25,85 +27,6 @@ tab2.newToggle("on/off"), "", false, function(togglestate)
         print("Off")
     end
 end)
-
-tab2.newSlider("Hitbox", " ", 10, false, function(num)
-    hitboxSize = num
-    print(num)
-end)
-    if isEnabled then
-    local HedsOn = Instance.new("Part")
-    HedsOn.Name = "HedsOn"
-    HedsOn.Anchored = false
-    HedsOn.CanCollide = false
-    HedsOn.Transparency = 0
-    HedsOn.Size = Vector3.new(10, 10, 10)
-    HedsOn.Parent = game.ReplicatedStorage
-    
-    local HeadExtends = false
-    local XSize = 10
-    local YSize = 10
-    local ZSize = 10
-    local HitboxTransparency = 10
-    
-    HeadHitboxTab:AddToggle('HBO',{Text='enabled',Default=false}):OnChanged(function(Value)
-    HeadExtends = Value
-    end)
-    
-    HeadHitboxTab:AddSlider('HitboxXSize_Slider', {Text = 'hitbox width:', Default = 5, Min = 0, Max = 10, Rounding = 2, Suffix = "%", Compact = false}):OnChanged(function(HitboxXSize)
-    XSize = HitboxXSize
-    end)
-    
-    HeadHitboxTab:AddSlider('HitboxYSize_Slider', {Text = 'hitbox height:', Default = 5, Min = 0, Max = 10, Rounding = 2, Suffix = "%", Compact = false}):OnChanged(function(HitboxYSize)
-    YSize = HitboxYSize
-    end)
-    
-    HeadHitboxTab:AddSlider('HitboxXSize_Slider', {Text = 'transparency:', Default = 10, Min = 0, Max = 60, Rounding = 0, Suffix = "%", Compact = false}):OnChanged(function(TransparencyValue)
-    HitboxTransparency = TransparencyValue / 100
-    end)
-    
-    task.spawn(function()
-    while task.wait() do
-      if HeadExtends then
-        for _, i in ipairs(game:GetService("Workspace"):GetChildren()) do
-          if i:FindFirstChild("HumanoidRootPart") and not i:FindFirstChild("HedsOn") then
-            local BigHeadsPart = Instance.new("Part")
-            BigHeadsPart.Name = "Head"
-            BigHeadsPart.Anchored = false
-            BigHeadsPart.CanCollide = false
-            BigHeadsPart.Transparency = HitboxTransparency
-            BigHeadsPart.Size = Vector3.new(XSize, YSize, ZSize)
-            local DeletePart = Instance.new("Weld")
-            DeletePart.Parent = BigHeadsPart
-            DeletePart.Name = "FAKEHEAD"
-            local HeadsParts = BigHeadsPart:Clone()
-            HeadsParts.Parent = i
-            HeadsParts.Orientation = i.HumanoidRootPart.Orientation
-            local clonedHedsOn = HedsOn:Clone()
-            clonedHedsOn.Parent = i
-            local Headswelding = Instance.new("Weld")
-            Headswelding.Parent = HeadsParts
-            Headswelding.Part0 = i.HumanoidRootPart
-            Headswelding.Part1 = HeadsParts
-            HeadsParts.Position = Vector3.new(i.HumanoidRootPart.Position.X, i.HumanoidRootPart.Position.Y - 0.6, i.HumanoidRootPart.Position.Z)
-          end
-        end
-      else
-        for _, i in ipairs(game:GetService("Workspace"):GetChildren()) do
-          if i:FindFirstChild("HumanoidRootPart") and i:FindFirstChild("HedsOn") then
-            i.HedsOn:Remove()
-            for _, a in ipairs(i:GetChildren()) do
-              if a.Name == "Head" and a:FindFirstChild("FAKEHEAD") and (not a:FindFirstChild("Nametag") or not a:FindFirstChild("Face")) then
-                a:Remove()
-              end
-            end
-          end
-        end
-      end
-    end
-    end)
-    
-
-
 
 local isEnabled = false
 local neckSize = 7.5
