@@ -1,5 +1,7 @@
 local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
 local LongNeck = Workspace.Ignore.LocalCharacter.Bottom.PrismaticConstraint
+local Lighting = Lighting.Bloom
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 
 
